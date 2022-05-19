@@ -1,0 +1,134 @@
+version: '3.9'
+services:
+  mongo-1:
+    container_name: mongo-1
+    env_file:
+      - .env
+    image: mongo:latest
+    restart: always
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}"
+      - "MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}"
+      - "MONGO_INITDB_USERNAME=${MONGO_INITDB_USERNAME}"
+      - "MONGO_INITDB_PASSWORD=${MONGO_INITDB_PASSWORD}"
+    volumes:
+      - ./key:/data/key
+      - ./mongo_init.sh:/docker-entrypoint-initdb.d/mongo_init.sh
+      - ./docker/mongo-1/db:/data/db
+    entrypoint:
+      - bash
+      - -c
+      - |
+          chmod 400 /data/key
+          chown 999:999 /data/key
+          exec docker-entrypoint.sh $$@   
+    command:
+      [
+        "mongod",
+        "--keyFile",
+        "/data/key",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
+    ports:
+      - 8001:27017
+    networks:
+      - mongodb
+
+  mongo-2:
+    container_name: mongo-2
+    env_file:
+      - .env
+    image: mongo:latest
+    restart: always
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}"
+      - "MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}"
+      - "MONGO_INITDB_USERNAME=${MONGO_INITDB_USERNAME}"
+      - "MONGO_INITDB_PASSWORD=${MONGO_INITDB_PASSWORD}"
+    volumes:
+      - ./key:/data/key
+      - ./mongo_init.sh:/docker-entrypoint-initdb.d/mongo_init.sh
+      - ./docker/mongo-2/db:/data/db
+    entrypoint:
+      - bash
+      - -c
+      - |
+          chmod 400 /data/key
+          chown 999:999 /data/key
+          exec docker-entrypoint.sh $$@   
+    command:
+      [
+        "mongod",
+        "--keyFile",
+        "/data/key",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
+    ports:
+      - 8002:27017
+    networks:
+      - mongodb
+
+  mongo-3:
+    container_name: mongo-3
+    env_file:
+      - .env
+    image: mongo:latest
+    restart: always
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}"
+      - "MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}"
+      - "MONGO_INITDB_USERNAME=${MONGO_INITDB_USERNAME}"
+      - "MONGO_INITDB_PASSWORD=${MONGO_INITDB_PASSWORD}"
+    volumes:
+      - ./key:/data/key
+      - ./mongo_init.sh:/docker-entrypoint-initdb.d/mongo_init.sh
+      - ./docker/mongo-3/db:/data/db
+    entrypoint:
+      - bash
+      - -c
+      - |
+          chmod 400 /data/key
+          chown 999:999 /data/key
+          exec docker-entrypoint.sh $$@   
+    command:
+      [
+        "mongod",
+        "--keyFile",
+        "/data/key",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
+    ports:
+      - 8003:27017
+    networks:
+      - mongodb
+  
+  mongo-init:
+    container_name: mongo-init
+    env_file:
+      - .env
+    image: mongo:latest
+    environment:
+      - "SERVER_IP=${SERVER_IP}"
+    volumes:
+      - ./replicaset_init.sh:/docker-entrypoint-initdb.d/replicaset_init.sh
+    depends_on:
+      - mongo-1
+      - mongo-2
+      - mongo-3
+    ports:
+      - 27017 
+    networks:
+      - mongodb
+networks:
+  mongodb:
+    name: mongodb
+    driver: bridge
