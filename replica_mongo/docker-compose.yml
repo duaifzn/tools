@@ -118,6 +118,8 @@ services:
     image: mongo:latest
     environment:
       - "SERVER_IP=${SERVER_IP}"
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
       - ./replicaset_init.sh:/docker-entrypoint-initdb.d/replicaset_init.sh
     depends_on:
