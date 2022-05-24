@@ -1,0 +1,20 @@
+data-path="/opt/besu/data"
+genesis-file="/config/besu/genesis.json"
+node-private-key-file="/opt/besu/data/key"
+
+min-gas-price=0
+host-whitelist=["*"]
+rpc-ws-enabled=true
+rpc-http-enabled=true
+rpc-http-host="0.0.0.0"
+rpc-http-cors-origins=["all"]
+rpc-http-api=["ETH","NET","WEB3","ADMIN", "MINER", "PRIV", "IBFT"]
+logging="DEBUG"
+p2p-host="0.0.0.0"
+network-id="1337"
+# nat-method="DOCKER"
+
+# Mining
+# miner-enabled=true
+# miner-coinbase="0x731819128853ef034f3b42a7b71f9bc6432c03f6"
+

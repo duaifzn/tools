@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  besu-1:
+    container_name: besu-1
+    image: hyperledger/besu:22.4.1
+    environment:
+      - BESU_CONFIG_FILE=/config/besu/config.toml
+    volumes:
+      - ./config/besu/config1.toml:/config/besu/config.toml
+      - ./networkFile/genesis.json:/config/besu/genesis.json
+      - ./networkFile/node-1/data:/opt/besu/data
+    ports:
+      - 30303:30303
+      - 8545:8545
