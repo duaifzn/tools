@@ -1,0 +1,18 @@
+sudo dnf update -y 
+sudo dnf install openssh-clients
+sudo dnf install openssh-server
+
+
+sudo systemctl start sshd
+
+sudo systemctl enable sshd
+
+sudo systemctl status sshd
+
+sudo firewall-cmd --add-service=ssh --permanent
+
+sudo firewall-cmd --reload
+
+ssh-keygen -b 2048 -t rsa
+
+00 22 * * * /path/backup.sh
