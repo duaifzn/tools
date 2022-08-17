@@ -1,0 +1,3 @@
+command: [--auth, --quiet, --logpath=/var/log/mongodb/mongod.log]
+volumes:
+      - ./docker/mongo/log:/var/log/mongodb
