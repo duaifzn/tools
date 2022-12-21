@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  besu-1:
+    container_name: besu-1
+    network_mode: "host"
+    image: hyperledger/besu:22.4.1
+    environment:
+      - BESU_CONFIG_FILE=/config/besu/config.toml
+    volumes:
+      - ./config/besu/config1.toml:/config/besu/config.toml
+      - ./IBFT-Network/genesis.json:/config/besu/genesis.json
+      - ./IBFT-Network/Node-1/data:/opt/besu/data

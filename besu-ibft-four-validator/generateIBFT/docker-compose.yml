@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  besu_test:
+    container_name: besu_test
+    image: hyperledger/besu:22.4.1
+    volumes:
+      - ./ibftConfigFile.json:/opt/besu/ibftConfigFile.json
+    # besu operator generate-blockchain-config --config-file=ibftConfigFile.json --to=networkFiles --private-key-file-name=key
