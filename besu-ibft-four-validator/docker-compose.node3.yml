@@ -14,6 +14,8 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
+    # depends_on:
+    #   - fluent-bit
 # fluent-bit:
 #   container_name: fluent-bit
 #   network_mode: "host"
@@ -22,5 +24,3 @@ services:
 #     - "LOKI_URL=http://{loki_ip}:3100/loki/api/v1/push"
 #   volumes:
 #     - ./docker/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-#   depends_on:
-#     - besu-3
