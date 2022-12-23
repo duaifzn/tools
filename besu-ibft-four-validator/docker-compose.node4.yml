@@ -10,3 +10,17 @@ services:
       - ./config/besu/config4.toml:/config/besu/config.toml
       - ./IBFT-Network/genesis.json:/config/besu/genesis.json
       - ./IBFT-Network/Node-4/data:/opt/besu/data
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+# fluent-bit:
+#   container_name: fluent-bit
+#   network_mode: "host"
+#   image: grafana/fluent-bit-plugin-loki:latest
+#   environment:
+#     - "LOKI_URL=http://{loki_ip}:3100/loki/api/v1/push"
+#   volumes:
+#     - ./docker/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+#   depends_on:
+#     - besu-4
